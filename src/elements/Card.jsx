@@ -19,10 +19,10 @@ function Card(props) {
     return (
         <div className="post-card">
             <div className="post-text">
-                <button className="like-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateCount(); }}>🤎 {count}</button>
                 <h2>{props.title}</h2>
                 <p>{props.created_at}</p>
-            </div>   
+            </div>
+            <button className="like-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateCount(); }}>🤎 {count}</button>   
         </div>
     )
 }
