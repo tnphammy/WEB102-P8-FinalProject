@@ -4,7 +4,7 @@ Submitted by: **Tammy Pham**
 
 This web app: **is where you can put your pretty sky photos anonymously!**
 
-Time spent: **7** hours spent in total
+Time spent: **8** hours spent in total
 
 ## Required Features
 
