@@ -1,6 +1,6 @@
 import Card from '../elements/Card.jsx'
 import SearchBar from '../components/SearchBar.jsx';
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { supabase } from '../client'
 import { useState, useEffect } from 'react'
 
