@@ -3,6 +3,7 @@ import { supabase } from '../client'
 
 function Account({ session }) {
   const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
   const [username, setUsername] = useState(null)
   const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
@@ -13,6 +14,8 @@ function Account({ session }) {
       setLoading(true)
       // Get user object
       const { data : { user } } = await supabase.auth.getUser();
+      console.log("I set the user!")
+      setUser(user);
 
 
       const { data, error } = await supabase
@@ -38,6 +41,7 @@ function Account({ session }) {
 
     return () => {
       ignore = true
+      console.log("I set the user!")
     }
   }, [session])
 
