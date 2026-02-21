@@ -167,6 +167,13 @@ post-view div {
   width: 60vh;
 }
 
+.user_editables {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 
 
 .read-the-docs {

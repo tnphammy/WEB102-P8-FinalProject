@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { supabase } from '../client'
 
 function Account({ session }) {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
+  // const [email, setEmail] = useState(null);
+  // const [created_at, setCreatedAt] = useState(null);
+  // const [updated_at, setUpdatedAt] = useState(null);
 
   useEffect(() => {
     let ignore = false
@@ -20,7 +22,7 @@ function Account({ session }) {
 
       const { data, error } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url`)
+        .select(`username, avatar_url`)
         .eq('id', user.id)
         .single()
 
@@ -28,9 +30,7 @@ function Account({ session }) {
         if (error) {
           console.warn(error)
         } else if (data) {
-          setUsername(data.username)
-          setWebsite(data.website)
-          setAvatarUrl(data.avatar_url)
+          console.log("I set username, created and updated.");
         }
       }
 
@@ -51,42 +51,55 @@ function Account({ session }) {
 
     setLoading(true)
     // Get user object
-    const { data : { user } } = session?.user;
-    console.log(data);
+    const user = session?.user;
+    console.log(user);
 
 
     const updates = {
       id: user.id,
+      email: user.email,
       username: username,
-      avatar_url: avatarUrl,
-      updated_at: new Date(),
+      avatar_url: avatar_url,
+      updated_at: user.updated_at,
+      created_at: user.created_at
     }
 
     const { error } = await supabase.from('profiles').upsert(updates)
 
     if (error) {
       alert(error.message)
-    } else {
-      setAvatarUrl(avatarUrl)
-    }
+    } 
     setLoading(false)
   }
 
   return (
     <form onSubmit={updateProfile} className="form-widget">
       <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
+        <h3>
+          You can return and edit this anytime!
+        </h3>
       </div>
-      <div>
-        <label htmlFor="username">Name</label>
+      <div className="user_editables">
+        <label htmlFor="email">Email: </label>
+        <input id="email" type="text" value={session.user.email} disabled />
+        <label htmlFor="username">Name: </label>
         <input
           id="username"
           type="text"
+          placeholder="What's your name?"
           required
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
         />
+        <label>Profile Photo (URL): </label>
+      < input
+          id="avatar_url"
+          type="text"
+          placeholder="Paste Image URL"
+          required
+          value={avatar_url || ''}
+          onChange={(e) => setAvatarUrl(e.target.value)}
+          />
       </div>
 
       <div>
